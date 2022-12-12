@@ -59,7 +59,7 @@ int tempcounter=0;
  
            if(markers(y,z)==2){    
             markerMap(y,z) = id;
-            msize++;
+           // msize++;
              for(int i = 0; i < 4; i++) {
 
                 int newX =y + dx[i];
@@ -84,9 +84,9 @@ int tempcounter=0;
 
 
 
-         cv::Vec3b colors[msize+1];
+         cv::Vec3b colors[id];
          #pragma omp parallel for
-         for(int i = 0; i <= msize; i++) {
+         for(int i = 0; i <= id; i++) {
            Vec3b vecColor;
            vecColor[0] = rand()%255+0;
            vecColor[1] = rand()%255+1;
