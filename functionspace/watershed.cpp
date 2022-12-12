@@ -13,13 +13,6 @@ struct Pixel {
     int y;
 
     Pixel(int val, int x, int y) : val(val), x(x), y(y) {}
-
-   /*    friend ostream &operator<<(ostream &os, const Pixel &pixel) {
-        os << "val: " << pixel.val << " x: " << pixel.x << " y: " << pixel.y;
-        return os;
-
-    }
-    */
 };
 
 
@@ -59,7 +52,6 @@ int tempcounter=0;
  
            if(markers(y,z)==2){    
             markerMap(y,z) = id;
-           // msize++;
              for(int i = 0; i < 4; i++) {
 
                 int newX =y + dx[i];
@@ -71,7 +63,6 @@ int tempcounter=0;
 	       temp(tempcounter,0)=image(newX,newY);
                temp(tempcounter,1)=newX;
                temp(tempcounter,2)=newY;
-              // prioq.push(temp(tempcounter));
 	       tempcounter++;
 
                 
@@ -96,9 +87,6 @@ int tempcounter=0;
 
 int ptcounter=0;
 
-
-//cout<<"OK for now"<<endl;
-
 #pragma omp parallel for
 for(int i=0;i<tempcounter;i++){
    Pixel origin = Pixel( temp(i,0),temp(i,1),temp(i,2));
@@ -110,14 +98,7 @@ for(int i=0;i<tempcounter;i++){
   while(!prioq.empty()){
     int CrtX=prioq.top().x;
     int CrtY=prioq.top().y;
-	  
-	  
-    // int curpoint[3]={prioq.top()[0],prioq.top()[1],prioq.top()[2]};
-    //int curpointx=temp(i,1);
-    //int curpointx=temp(i,2);
     prioq.pop();
-    //int CrtX=curpoint[1];
-    //int CrtY=curpoint[2];
     bool canLabel = true;
     int neighboursLabel = 0;
     for(int i = 0; i < 8; i++) {
@@ -159,64 +140,6 @@ for(int i=0;i<tempcounter;i++){
 }//for
 
 
-
-
-/*
-        while(!prioq.empty()) {
-             int curpoint[3]={prioq.top()[0],prioq.top()[1],prioq.top()[2]};
-             prioq.pop();
-             int CrtX=curpoint[1];
-             int CrtY=curpoint[2];
-  
-            bool canLabel = true;
-            int neighboursLabel = 0;
-            for(int i = 0; i < 8; i++) {
-            
-   
-              int nextX = curpoint[1] + dx[i];
-              int nextY = curpoint[2] + dy[i];
-             
-
-            
-              if(nextX < 0 || nextY < 0 || nextX >= rows || nextY >= cols) {
-                    continue;
-                }
-
-		 nextSet(ptcounter,0)=image(nextX,nextY);
-
-                 nextSet(ptcounter,1)=nextX;
-	        nextSet(ptcounter,2)=nextY;
-
-                if(markerMap(nextX,nextY) != 0 &&  nextSet(ptcounter,0)!= 0){
-                    if(neighboursLabel == 0) {
-                        neighboursLabel = markerMap(nextX,nextY);//using id value,all strats from their closest neighbour
-                    } else {//this part tells us that if there is two points at the boundary to see if they are in the same classification,
-                    //two classification there is no merge
-                        if(markerMap(nextX,nextY) != neighboursLabel ) {
-                            canLabel = false;
-                        }
-                    }
-                } else {
-                    if(inprioq(nextX,nextY) == false) {
-                        inprioq(nextX,nextY) = true;//aviod duplicate point is chosen,point does not exist in marker or background
-                        prioq.push(nextSet(ptcounter));
-                        //the most important expending step,//only the point whose pixel value is 0 in Markermap
-                    }
-                }
-		ptcounter++;
-
-            }
-
-            if(canLabel&&image(CrtX,CrtY)!=0) {
-                
-                markerMap(CrtX,CrtY) = neighboursLabel;//in this way it tells us that the points in same region share the same id or label
-               duplImage.at<Vec3b>(CrtX,CrtY)=colors[ markerMap(CrtX,CrtY) ];
-         
-                
-            }
-         
-        }
-*/
        cv::addWeighted(duplImage,0.4,testDuplicate,0.6,0,dstImage);
 
     
