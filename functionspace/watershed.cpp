@@ -26,13 +26,6 @@ struct cmp1{
 
 
 Mat WatershedAlg::watershed(Array2D<int> &image, Array2D<int>& markers,Mat &duplImage,int &rows,int &cols,Array2D<bool> &inprioq,Array2D<int>& markerMap,Array2D<int>&temp,Array2D<int>& nextSet){
-
-
-
-//priority_queue<int*,vector<int*>,Compare>prioq;
-
-
-       int msize=0;
   
        int dx[NUMSIZE]={-1, 1, 0, 0, -1, -1, 1, 1};
        int dy[NUMSIZE]={0, 0, -1, 1, -1,  1, 1, -1};
